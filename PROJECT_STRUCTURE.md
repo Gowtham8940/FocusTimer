@@ -1,0 +1,59 @@
+# FocusTimer Structure
+
+```
+FocusTimer/
+  App.tsx
+  android/
+  ios/
+  index.js
+  app.json
+  babel.config.js
+  metro.config.js
+  tsconfig.json
+  package.json
+  src/
+    components/
+      common/
+        PrimaryButton.tsx
+        ScreenShell.tsx
+      timer/
+        TimerDisplay.tsx
+      notes/
+      reports/
+      category/
+    constants/
+      categories.ts
+    hooks/
+      useAuthBootstrap.ts
+      useTimerEngine.ts
+    navigation/
+      RootNavigator.tsx
+    reports/
+      dataModels.md
+    screens/
+      TimerScreen.tsx
+      SettingsScreen.tsx
+      CategoryManagerScreen.tsx
+      NotesScreen.tsx
+      ReportsScreen.tsx
+    services/
+      storage.ts
+      firebase/
+        firebaseConfig.ts
+        authService.ts
+        notesSyncService.ts
+    store/
+      authStore.ts
+      timerStore.ts
+      settingsStore.ts
+      categoryStore.ts
+      notesStore.ts
+      reportStore.ts
+    theme/
+      theme.ts
+    types/
+      models.ts
+      navigation.ts
+    utils/
+      time.ts
+```
