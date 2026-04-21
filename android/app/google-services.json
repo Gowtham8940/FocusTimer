@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "186846727726",
+    "project_id": "focustimer-6023e",
+    "storage_bucket": "focustimer-6023e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186846727726:android:f79e584bf2b721675b19bf",
+        "android_client_info": {
+          "package_name": "com.focustimer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpKKElzDEIRfY-sCG700cLcbO6jgACeRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
