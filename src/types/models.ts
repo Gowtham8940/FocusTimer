@@ -53,4 +53,5 @@ export interface UserSettings {
   torchEnabled: boolean;
   dndEnabled: boolean;
   animationEnabled: boolean;
+  timerTemplate: 'ring' | 'minimal' | 'neon' | 'linear' | 'bold' | 'flip' | 'dot';
 }

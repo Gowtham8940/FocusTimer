@@ -1,6 +1,8 @@
 import {create} from 'zustand';
+import {persist, createJSONStorage} from 'zustand/middleware';
 
 import {UserSettings} from '../types/models';
+import {mmkvStorage} from './storage';
 
 const defaultSettings: UserSettings = {
   backgroundColor: '#000000',
@@ -9,6 +11,7 @@ const defaultSettings: UserSettings = {
   torchEnabled: false,
   dndEnabled: false,
   animationEnabled: true,
+  timerTemplate: 'ring',
 };
 
 interface SettingsState {
@@ -16,13 +19,21 @@ interface SettingsState {
   updateSettings: (next: Partial<UserSettings>) => void;
 }
 
-export const useSettingsStore = create<SettingsState>(set => ({
-  settings: defaultSettings,
-  updateSettings: next =>
-    set(state => ({
-      settings: {
-        ...state.settings,
-        ...next,
-      },
-    })),
-}));
+export const useSettingsStore = create<SettingsState>()(
+  persist(
+    set => ({
+      settings: defaultSettings,
+      updateSettings: next =>
+        set(state => ({
+          settings: {
+            ...state.settings,
+            ...next,
+          },
+        })),
+    }),
+    {
+      name: 'focus-timer-settings-v1',
+      storage: createJSONStorage(() => mmkvStorage),
+    },
+  ),
+);

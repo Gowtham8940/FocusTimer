@@ -1,3 +1,9 @@
-import {MMKV} from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 
-export const storage = new MMKV({id: 'focus-timer-storage'});
+/**
+ * MMKV Storage Instance
+ * We use the createMMKV factory function which is the modern v4+ API.
+ */
+export const storage = createMMKV({
+  id: 'focus-timer-storage',
+});

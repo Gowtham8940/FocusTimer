@@ -8,17 +8,17 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
 
 import {ScreenShell} from '../components/common/ScreenShell';
 import {useCategoryStore} from '../store/categoryStore';
 import {theme} from '../theme/theme';
 import {Category} from '../types/models';
-import {RootStackParamList} from '../types/navigation';
+import {RootDrawerParamList} from '../types/navigation';
 
 export function CategoryManagerScreen() {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
   const categories = useCategoryStore(state => state.categories);
   const selectedCategoryId = useCategoryStore(state => state.selectedCategoryId);
   const selectedSubcategoryId = useCategoryStore(
@@ -105,7 +105,7 @@ export function CategoryManagerScreen() {
           editable={Boolean(selectedCategory)}
           style={[
             styles.input,
-            !selectedCategory && {opacity: 0.6},
+            !selectedCategory && styles.disabledInput,
           ]}
         />
         <Pressable
@@ -137,7 +137,7 @@ export function CategoryManagerScreen() {
 
       <Pressable
         style={[styles.actionButton, styles.backButton]}
-        onPress={() => navigation.navigate('Timer')}>
+        onPress={() => navigation.navigate('HomeTabs')}>
         <Text style={styles.actionText}>Back To Timer</Text>
       </Pressable>
     </ScreenShell>
@@ -167,6 +167,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: theme.colors.surface,
     marginBottom: 8,
+  },
+  disabledInput: {
+    opacity: 0.6,
   },
   actionButton: {
     borderWidth: 1,

@@ -1,7 +1,14 @@
-export type RootStackParamList = {
+export type RootTabParamList = {
   Timer: undefined;
-  Settings: undefined;
-  CategoryManager: undefined;
   Notes: undefined;
   Reports: undefined;
+};
+
+export type RootDrawerParamList = {
+  HomeTabs: undefined;
+  Settings: undefined;
+  Notes: undefined;
+  Reports: undefined;
+  CategoryManager: undefined;
+  TimerTemplates: undefined;
 };
