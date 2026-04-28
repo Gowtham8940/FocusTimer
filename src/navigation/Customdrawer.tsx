@@ -226,10 +226,6 @@ function DrawerFooter({ drawerOpen }: { drawerOpen: boolean }) {
                 <Text style={styles.footerSep}>·</Text>
                 <Text style={styles.footerLink}>Licenses</Text>
             </View>
-
-            <Text style={styles.footerPlatform}>
-                {Platform.OS === 'ios' ? '🍎 iOS' : '🤖 Android'} · React Native
-            </Text>
         </Animated.View>
     );
 }
