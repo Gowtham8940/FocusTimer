@@ -9,10 +9,20 @@ require 'fileutils'
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
-use_frameworks! :linkage => :static
-$RNFirebaseAsStaticFramework = true
+$FirebaseSDKVersion = '12.10.0'
 
 target 'FocusTimer' do
+  pod 'FirebaseAuthInterop', :modular_headers => true
+  pod 'FirebaseAppCheckInterop', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseCoreExtension', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'FirebaseAuth', :modular_headers => true
+  pod 'FirebaseFirestore', :modular_headers => true
+  pod 'FirebaseFirestoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'RecaptchaInterop', :modular_headers => true
+
   config = use_native_modules!
 
   use_react_native!(
@@ -189,17 +199,44 @@ post_integrate do |installer|
     File.write(xcconfig, updated) if updated != content
   end
 
+  rnfb_auth_prefix = File.join(__dir__, 'Pods', 'Target Support Files', 'RNFBAuth', 'RNFBAuth-prefix.pch')
+  if File.exist?(rnfb_auth_prefix)
+    content = File.read(rnfb_auth_prefix)
+    firebase_auth_imports = <<~IMPORTS
+
+      #ifdef __OBJC__
+      @import FirebaseAuth;
+      @import FirebaseAuth.Swift;
+      #endif
+    IMPORTS
+    File.write(rnfb_auth_prefix, content + firebase_auth_imports) unless content.include?('@import FirebaseAuth.Swift;')
+  end
+
+  Dir.glob(File.join(__dir__, 'Pods', 'Target Support Files', 'Pods-FocusTimer', 'Pods-FocusTimer.*.xcconfig')).each do |xcconfig|
+    next unless File.file?(xcconfig)
+
+    content = File.read(xcconfig)
+    updated = content.gsub(/\s-weak_framework "FirebaseFirestoreInternal"/, '')
+    File.write(xcconfig, updated) if updated != content
+  end
+
   firebase_header = File.join(__dir__, 'Pods', 'Headers', 'Private', 'Firebase', 'Firebase.h')
   if File.exist?(firebase_header)
     begin
-      # Firebase.h may be a symlink; resolve to the real file before chmod
+      # Firebase Auth 12 exposes several ObjC-consumed symbols through the generated Swift header.
+      # Static-library pods do not always satisfy Firebase.h's umbrella-header condition, so make
+      # the Swift compatibility import explicit and repeatable after every pod install.
       real_header = File.symlink?(firebase_header) ? File.realpath(firebase_header) : firebase_header
       FileUtils.chmod('+w', real_header)
       content = File.read(real_header)
       updated = content.gsub(
-        "#import <FirebaseAuth/FirebaseAuth-Swift.h>",
-        "#if __has_include(<FirebaseAuth/FirebaseAuth-Swift.h>)\n      #import <FirebaseAuth/FirebaseAuth-Swift.h>\n    #endif"
+        /#if __has_include\("FirebaseAuth-umbrella\.h"\)\n(?:.*\n)*?      #import <FirebaseAuth\/FirebaseAuth-Swift\.h>\n(?:.*\n)*?    #endif\n/,
+        "#if __has_include(<UIKit/UIKit.h>)\n      #import <UIKit/UIKit.h>\n    #endif\n    #if __has_include(<FirebaseAuthInterop/FIRAuthInterop.h>)\n      #import <FirebaseAuthInterop/FIRAuthInterop.h>\n    #endif\n    #if __has_include(<FirebaseAuth/FirebaseAuth-Swift.h>)\n      #import <FirebaseAuth/FirebaseAuth-Swift.h>\n    #endif\n"
       )
+      updated = updated.gsub(
+        "#import <FirebaseAuth/FirebaseAuth.h>\n",
+        "#import <FirebaseAuth/FirebaseAuth.h>\n    #if __has_include(<FirebaseAuth/FirebaseAuth-Swift.h>)\n      #import <FirebaseAuth/FirebaseAuth-Swift.h>\n    #endif\n"
+      ) unless updated.include?("#import <FirebaseAuth/FirebaseAuth-Swift.h>")
       File.write(real_header, updated) if updated != content
     rescue Errno::EACCES, Errno::EPERM, StandardError
       # Skip patching if the header is not writable in this environment.

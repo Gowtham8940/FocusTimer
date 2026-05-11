@@ -29,7 +29,7 @@ export function TimerScreen() {
   const timerTemplate = useSettingsStore(state => state.settings.timerTemplate);
   const timerTextColor = useSettingsStore(state => state.settings.timerTextColor);
   const backgroundColor = useSettingsStore(state => state.settings.backgroundColor);
-  
+
   const isRunning = useTimerStore(state => state.isRunning);
   const hasStarted = useTimerStore(state => state.hasStarted);
   const remainingSeconds = useTimerStore(state => state.remainingSeconds);
@@ -70,19 +70,19 @@ export function TimerScreen() {
   const renderActiveTemplate = () => {
     if (!hasStarted) {
       return (
-        <TimeInputPicker 
-          hours={hours} 
-          minutes={minutes} 
-          seconds={seconds} 
-          onChange={handleTimeChange} 
+        <TimeInputPicker
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+          onChange={handleTimeChange}
         />
       );
     }
 
-    const commonProps = { 
-      remainingSeconds: displaySeconds, 
-      totalSeconds: initialSeconds, 
-      color: timerTextColor 
+    const commonProps = {
+      remainingSeconds: displaySeconds,
+      totalSeconds: initialSeconds,
+      color: timerTextColor
     };
 
     switch (timerTemplate) {
@@ -92,7 +92,7 @@ export function TimerScreen() {
       case 'bold': return <BoldTimer {...commonProps} />;
       case 'flip': return <FlipTimer {...commonProps} />;
       case 'dot': return <DotTimer {...commonProps} />;
-      case 'ring': 
+      case 'ring':
       default:
         return (
           <View style={styles.ringWrapper}>
@@ -110,7 +110,7 @@ export function TimerScreen() {
 
   return (
     <View style={dynamicContainerStyle}>
-      
+
       <View style={styles.topSection}>
         <Pressable
           style={styles.categoryPill}
@@ -164,11 +164,11 @@ export function TimerScreen() {
                 else resume();
               }}
             />
-            <PrimaryButton 
-              label="Reset" 
-              iconName="refresh" 
-              variant="ghost" 
-              onPress={handleReset} 
+            <PrimaryButton
+              label="Reset"
+              iconName="refresh"
+              variant="ghost"
+              onPress={handleReset}
             />
           </>
         )}
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   displayOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     alignItems: 'center',
     justifyContent: 'center',
   },
