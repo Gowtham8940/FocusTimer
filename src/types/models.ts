@@ -19,6 +19,7 @@ export interface TimerConfig {
   alertEnabled: boolean;
   notificationEnabled: boolean;
   unlockDifficulty: Difficulty;
+  goal?: string;
 }
 
 export interface FocusSession {

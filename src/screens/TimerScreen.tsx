@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 
-import { PrimaryButton } from '../components/common/PrimaryButton';
 import { TimerDisplay } from '../components/timer/TimerDisplay';
 import { TimeInputPicker } from '../components/timer/TimeInputPicker';
 import { AnimatedTimerRing } from '../components/timer/AnimatedTimerRing';
@@ -19,7 +18,7 @@ import { useSettingsStore } from '../store/settingsStore';
 import { useTimerStore } from '../store/timerStore';
 import { theme } from '../theme/theme';
 import { RootDrawerParamList } from '../types/navigation';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { FlyingTextInput } from '../components/common/TextAnimation';
 
 export function TimerScreen() {
   useTimerEngine();
@@ -50,6 +49,7 @@ export function TimerScreen() {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(0);
+  const [focusGoal, setFocusGoal] = useState('');
 
   const setupSeconds = hours * 3600 + minutes * 60 + seconds;
   const displaySeconds = hasStarted ? remainingSeconds : setupSeconds;
@@ -112,7 +112,19 @@ export function TimerScreen() {
     <View style={dynamicContainerStyle}>
 
       <View style={styles.topSection}>
-        <Pressable
+
+        {/* Goal Text Input */}
+        <FlyingTextInput 
+          value={focusGoal}
+          onChangeText={setFocusGoal}
+          placeholder="Type your focus goal…"
+          fontSize={24}
+        />
+
+
+
+
+        {/* <Pressable
           style={styles.categoryPill}
           onPress={() => navigation.navigate('CategoryManager')}>
           <Icon name="grid-outline" size={16} color={theme.colors.accent} style={dynamicIconStyle} />
@@ -148,6 +160,7 @@ export function TimerScreen() {
                     unlockDifficulty: 'none',
                     alertEnabled: true,
                     notificationEnabled: true,
+                    goal: focusGoal,
                   },
                 );
               }
@@ -171,7 +184,7 @@ export function TimerScreen() {
               onPress={handleReset}
             />
           </>
-        )}
+        )} */}
       </View>
     </View>
   );
