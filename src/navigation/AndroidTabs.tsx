@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Pressable, StyleSheet, View, Text } from 'react-native';
-import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { createNativeBottomTabNavigator, BottomTabBarProps } from '@bottom-tabs/react-navigation';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -20,7 +20,7 @@ import { ReportsScreen } from '../screens/ReportsScreen';
 import { theme } from '../theme/theme';
 import { RootTabParamList } from '../types/navigation';
 
-const Tab = createBottomTabNavigator<RootTabParamList>();
+const Tab = createNativeBottomTabNavigator<RootTabParamList>();
 
 const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
   Timer: { active: 'timer', inactive: 'timer-outline' },
@@ -179,11 +179,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.surface,
     borderWidth: 1,
     borderColor: theme.colors.border,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.55,
-    shadowRadius: 20,
-    elevation: 18,
+    boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.55)',
   },
   tabButtonWrapper: {
     flex: 1,
@@ -197,10 +193,7 @@ const styles = StyleSheet.create({
     height: '90%',
     borderRadius: 20,
     backgroundColor: '#1a4a80',
-    shadowColor: '#2e7fff',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 1,
-    shadowRadius: 16,
+    boxShadow: '0px 0px 16px rgba(46, 127, 255, 1)',
   },
   tabPill: {
     position: 'absolute',

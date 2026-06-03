@@ -23,5 +23,11 @@ class MainApplication : Application(), ReactApplication {
   override fun onCreate() {
     super.onCreate()
     loadReactNative(this)
+    
+    // Disable font scaling globally
+    val configuration = resources.configuration
+    configuration.fontScale = 1.0f
+    val metrics = resources.displayMetrics
+    resources.updateConfiguration(configuration, metrics)
   }
 }

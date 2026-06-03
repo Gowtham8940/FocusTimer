@@ -19,6 +19,7 @@ import { useTimerStore } from '../store/timerStore';
 import { theme } from '../theme/theme';
 import { RootDrawerParamList } from '../types/navigation';
 import { FlyingTextInput } from '../components/common/TextAnimation';
+import ScreamForIceCream from './Screamforicecream';
 
 export function TimerScreen() {
   useTimerEngine();
@@ -105,7 +106,7 @@ export function TimerScreen() {
     }
   };
 
-  const dynamicContainerStyle = [styles.container, { backgroundColor: backgroundColor }];
+  const dynamicContainerStyle = [styles.container];
   const dynamicIconStyle = { marginRight: 6 };
 
   return (
@@ -114,14 +115,14 @@ export function TimerScreen() {
       <View style={styles.topSection}>
 
         {/* Goal Text Input */}
-        <FlyingTextInput 
+        {/* <FlyingTextInput 
           value={focusGoal}
           onChangeText={setFocusGoal}
           placeholder="Type your focus goal…"
           fontSize={24}
-        />
+        /> */}
 
-
+        <ScreamForIceCream />
 
 
         {/* <Pressable

@@ -348,10 +348,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(79, 163, 255, 0.45)',
         marginBottom: 12,
         // Soft glow
-        shadowColor: '#4fa3ff',
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.4,
-        shadowRadius: 10,
+        boxShadow: '0px 0px 10px rgba(79, 163, 255, 0.4)',
     },
     avatarInner: {
         flex: 1,

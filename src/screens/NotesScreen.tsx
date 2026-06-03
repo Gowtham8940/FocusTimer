@@ -15,6 +15,12 @@ import {useCategoryStore} from '../store/categoryStore';
 import {useNotesStore} from '../store/notesStore';
 import {theme} from '../theme/theme';
 
+const renderNoteItem = ({item}: {item: any}) => (
+  <View style={styles.card}>
+    <Text style={styles.text}>{item.text}</Text>
+  </View>
+);
+
 export function NotesScreen() {
   const [draft, setDraft] = useState('');
 
@@ -142,11 +148,7 @@ export function NotesScreen() {
         data={notes}
         keyExtractor={item => item.id}
         ListEmptyComponent={<Text style={styles.empty}>No notes yet.</Text>}
-        renderItem={({item}) => (
-          <View style={styles.card}>
-            <Text style={styles.text}>{item.text}</Text>
-          </View>
-        )}
+        renderItem={renderNoteItem}
       />
     </ScreenShell>
   );

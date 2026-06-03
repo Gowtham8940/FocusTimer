@@ -6,6 +6,13 @@ import {useReportStore} from '../store/reportStore';
 import {theme} from '../theme/theme';
 import {formatDuration} from '../utils/time';
 
+const renderReportItem = ({item}: {item: any}) => (
+  <View style={styles.item}>
+    <Text style={styles.date}>{item.dateKey}</Text>
+    <Text style={styles.total}>{formatDuration(item.totalSeconds)}</Text>
+  </View>
+);
+
 export function ReportsScreen() {
   const dailyReports = useReportStore(state => state.dailyReports);
 
@@ -15,12 +22,7 @@ export function ReportsScreen() {
         data={dailyReports}
         keyExtractor={item => item.dateKey}
         ListEmptyComponent={<Text style={styles.empty}>No reports yet.</Text>}
-        renderItem={({item}) => (
-          <View style={styles.item}>
-            <Text style={styles.date}>{item.dateKey}</Text>
-            <Text style={styles.total}>{formatDuration(item.totalSeconds)}</Text>
-          </View>
-        )}
+        renderItem={renderReportItem}
       />
     </ScreenShell>
   );

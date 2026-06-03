@@ -102,7 +102,9 @@ export function FlyingTextInput({ value: propValue, onChangeText, fontSize = 24,
             />
             <View style={styles.cardActions}>
                 <Pressable onPress={() => setCharKeys(prev => prev.map(() => nextKey.current++))} style={styles.button}>
-                    <Text style={styles.buttonText}>Replay</Text>
+                    <Text
+                    // allowFontScaling={false}
+                    style={styles.buttonText}>Replay</Text>
                 </Pressable>
                 {val.length > 0 && (
                     <Pressable onPress={() => { propValue === undefined ? setInternalValue('') : onChangeText?.(''); inputRef.current?.focus(); }} style={styles.clearButton}>

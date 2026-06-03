@@ -3,23 +3,23 @@ import { View, StyleSheet, Text } from 'react-native';
 import { formatDuration } from '../../../utils/time';
 import { theme } from '../../../theme/theme';
 
+const FlipCard = ({ val, color }: { val: string; color: string }) => (
+  <View style={styles.card}>
+    <Text style={[styles.text, { color }]}>{val}</Text>
+    <View style={styles.divider} />
+  </View>
+);
+
 export function FlipTimer({ remainingSeconds, color }: { remainingSeconds: number, color: string }) {
   const parts = formatDuration(remainingSeconds).split(':');
-  
-  const FlipCard = ({ val }: { val: string }) => (
-    <View style={styles.card}>
-      <Text style={[styles.text, { color }]}>{val}</Text>
-      <View style={styles.divider} />
-    </View>
-  );
 
   return (
     <View style={styles.container}>
-      <FlipCard val={parts[0]} />
+      <FlipCard val={parts[0]} color={color} />
       <Text style={styles.colon}>:</Text>
-      <FlipCard val={parts[1]} />
+      <FlipCard val={parts[1]} color={color} />
       <Text style={styles.colon}>:</Text>
-      <FlipCard val={parts[2]} />
+      <FlipCard val={parts[2]} color={color} />
     </View>
   );
 }
