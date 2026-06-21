@@ -19,13 +19,14 @@ import { NotesScreen } from '../screens/NotesScreen';
 import { ReportsScreen } from '../screens/ReportsScreen';
 import { theme } from '../theme/theme';
 import { RootTabParamList } from '../types/navigation';
-
+import SearchScreen from '../interview/Screen1'
 const Tab = createNativeBottomTabNavigator<RootTabParamList>();
 
 const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
   Timer: { active: 'timer', inactive: 'timer-outline' },
   Notes: { active: 'document-text', inactive: 'document-text-outline' },
   Reports: { active: 'bar-chart', inactive: 'bar-chart-outline' },
+  Search: { active: 'search', inactive: 'search-outline' },
 };
 
 function AnimatedTabButton({
@@ -154,6 +155,7 @@ export function AndroidTabs() {
     <Tab.Navigator
       tabBar={CustomTabBar}
       screenOptions={{ headerShown: false }}>
+      {/* <Tab.Screen name="Search" component={SearchScreen} /> */}
       <Tab.Screen name="Timer" component={TimerScreen} />
       <Tab.Screen name="Notes" component={NotesScreen} />
       <Tab.Screen name="Reports" component={ReportsScreen} />
